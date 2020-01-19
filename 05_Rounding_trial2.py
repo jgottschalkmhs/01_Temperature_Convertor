@@ -9,9 +9,8 @@ print()
 print("**** Rounded Numbers ****")
 
 for item in to_round:
-    try:
-        integer= int(item)
-        print(integer)
-    except ValueError:
+    if item%1 == 0:
+        print("{:.0f}".format(item))
+    else:
         print("{:.1f}".format(item))
 
