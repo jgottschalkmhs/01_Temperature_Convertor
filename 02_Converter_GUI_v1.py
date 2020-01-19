@@ -42,7 +42,7 @@ class Converter:
 
         self.to_c_button = Button(self.conversion_buttons_frame,
                                   text="To Centigrade", font="Arial 10 bold",
-                                  bg="Khaki1", padx=10, pady=10)
+                                  bg="Khaki1", padx=10, pady=10, command=lambda: self.temp_convert("to_c"))
         self.to_c_button.grid(row=0, column=0)
 
         self.to_f_button = Button(self.conversion_buttons_frame,
@@ -67,6 +67,23 @@ class Converter:
         self.help_button = Button(self.hist_help_frame, font="Arial 12 bold",
                                        text="Help", width=5)
         self.help_button.grid(row=0, column=1)
+
+    def temp_convert(self, to):
+        print(to)
+
+        # Retrieve amount entered into Entry field
+
+        # Check amount is a valid number
+
+        # Convert to F
+
+        # Convert to C
+
+        # Round!!
+
+        # Display answer
+
+        # Add Answer to list for History
 
 
 
