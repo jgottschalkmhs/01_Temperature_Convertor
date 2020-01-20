@@ -42,12 +42,14 @@ class Converter:
 
         self.to_c_button = Button(self.conversion_buttons_frame,
                                   text="To Centigrade", font="Arial 10 bold",
-                                  bg="Khaki1", padx=10, pady=10, command=lambda: self.temp_convert("to_c"))
+                                  bg="Khaki1", padx=10, pady=10,
+                                  command=lambda: self.temp_convert(-459))
         self.to_c_button.grid(row=0, column=0)
 
         self.to_f_button = Button(self.conversion_buttons_frame,
                                   text="To Fahrenheit", font="Arial 10 bold",
-                                  bg="Orchid1", padx=10, pady=10)
+                                  bg="Orchid1", padx=10, pady=10,
+                                  command=lambda: self.temp_convert(-273))
         self.to_f_button.grid(row=0, column=1)
 
         # Answer label (row 4)
@@ -68,23 +70,45 @@ class Converter:
                                        text="Help", width=5)
         self.help_button.grid(row=0, column=1)
 
-    def temp_convert(self, to):
-        print(to)
+    def temp_convert(self, low):
+        print(low)
+
+        error = "#ffafaf"   # Pale pink background for when entry box has errors
 
         # Retrieve amount entered into Entry field
+        to_convert = self.to_convert_entry.get()
 
-        # Check amount is a valid number
+        try:
+            to_convert = float(to_convert)
+            has_errors = "no"
 
-        # Convert to F
+            # Check and convert to Farhrenheit
+            if low == -273 and to_convert >= low:
+                fahrenheit = (to_convert * 9/5) + 32
+                answer = "{} degrees C is {} degrees F".format(to_convert, fahrenheit)
 
-        # Convert to C
+            # Check and convert to Centigrade
+            elif low == -459 and to_convert >= low:
+                celsius = (to_convert - 32) * 5/9
+                answer = "{} degrees C is {} degrees F".format(to_convert, celsius)
 
-        # Round!!
+            else:
+                # Input is invalid (too cold)!!
+                answer = "Too Cold!"
+                has_errors = "yes"
 
-        # Display answer
+            # Display answer
+            if has_errors == "no":
+                self.converted_label.configure(text=answer, fg="blue")
+                self.to_convert_entry.configure(bg="white")
+            else:
+                self.converted_label.configure(text=answer, fg="red")
+                self.to_convert_entry.configure(bg=error)
+            # Add Answer to list for History
 
-        # Add Answer to list for History
-
+        except ValueError:
+            self.converted_label.configure(text="Enter a number!!", fg="red")
+            self.to_convert_entry.configure(bg=error)
 
 
 # main routine
