@@ -10,7 +10,7 @@ class Converter:
         background_color = "light blue"
 
         # Converter Frame
-        self.converter_frame = Frame(width=350, bg=background_color,
+        self.converter_frame = Frame(bg=background_color,
                                      pady=10)
         self.converter_frame.grid()
 
