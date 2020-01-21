@@ -11,13 +11,15 @@ class Converter:
         background_color = "light blue"
 
         # In actual program this is blank and is populated with user calculations
-        self.all_calc_list = ['0 degrees C is -17.8 degrees F',
-                         '0 degrees C is 32 degrees F',
-                         '40 degrees C is 104 degrees F',
-                         '40 degrees C is 4.4 degrees F',
-                         '12 degrees C is 53.6 degrees F',
-                         '24 degrees C is 75.2 degrees F',
-                         '100 degrees C is 37.8 degrees F']
+        self.all_calc_list = ['1 degrees C is -17.2 degrees F',
+                              '2 degrees C is -16.7 degrees F',
+                              '3 degrees C is -16.1 degrees F',
+                              '4 degrees C is -15.6 degrees F',
+                              '5 degrees C is -15 degrees F',
+                              '6 degrees C is -14.4 degrees F',
+                              '7 degrees C is -13.9 degrees F',
+                              '8 degrees C is -13.3 degrees F',
+                              '9 degrees C is -12.8 degrees F']
 
         # Converter Main Screen GUI...
         self.converter_frame = Frame(width=300, height=300, bg=background_color,
@@ -82,19 +84,23 @@ class History:
                                           padx=10, pady=10)
         self.history_instructions.grid(row=1)
 
-        # Calculations frame (row 2)
-        self.all_calcs_frame = Frame(self.history_frame, bg=background)
-        self.all_calcs_frame.grid(row=2)
 
         # Calculations go here...
+        history_string = ""
 
-        # Loop through list and put each item in a new label
-        counter = 0
-        for item in calc_history:
-            self.single_calc_label = Label(self.all_calcs_frame, text=item, bg=background,
-                                           font="Arial 12", justify=LEFT)
-            self.single_calc_label.grid(row=counter)
-            counter += 1
+        # Get 7 most recent calculations and put them into string
+        # separated with \n
+        if len(calc_history) >= 7:
+            for item in range(0, 7):
+                history_string += calc_history[len(calc_history) - item - 1]+"\n"
+        else:
+            for item in calc_history:
+                history_string += calc_history[len(calc_history) - calc_history.index(item) - 1] + "\n"
+
+        # Calculations label (row 2)
+        self.calc_label = Label(self.history_frame, text=history_string,
+                                bg=background,font="Arial 12", justify=LEFT)
+        self.calc_label.grid(row=2)
 
         # Export / Dismiss Buttons Frame (row 3)
         self.export_dismiss_frame = Frame(self.history_frame)
