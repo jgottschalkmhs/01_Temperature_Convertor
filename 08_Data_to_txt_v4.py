@@ -1,12 +1,16 @@
-# checks if something is valid
-
+# Source: https://www.guru99.com/reading-and-writing-files-in-python.html
 import re
+
+# Data to be outputted
+data = ['I', 'love', 'computers']
+
+# Get filename, can't be blank / invalid
+# assume valid data for now.
 
 has_error = "yes"
 while has_error == "yes":
-    print()
-    filename = input("Enter a filename: ")
     has_error = "no"
+    filename = input("Enter a Filename (leave off the extension): ")
 
     valid_char = "[A-Za-z0-9_]"
     for letter in filename:
@@ -15,9 +19,11 @@ while has_error == "yes":
 
         elif letter == " ":
                 problem = "(no spaces allowed)"
+
         else:
             problem = ("(no {}'s allowed)".format(letter))
         has_error = "yes"
+        break
 
     if filename == "":
         problem = "can't be blank"
@@ -25,5 +31,20 @@ while has_error == "yes":
 
     if has_error == "yes":
         print("Invalid filename - {}".format(problem))
+        print()
     else:
         print("You entered a valid filename")
+
+
+# add .txt suffix!
+filename = filename + ".txt"
+
+# create file to hold data
+f = open(filename, "w+")
+
+# add new line at end of each item
+for item in data:
+    f.write(item + "\n")
+
+# close file
+f.close()
