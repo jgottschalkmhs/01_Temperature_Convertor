@@ -90,7 +90,13 @@ class History:
                 history_string += calc_history[len(calc_history) - item - 1]+"\n"
         else:
             for item in calc_history:
-                history_string += calc_history[len(calc_history) - calc_history.index(item) - 1] + "\n"
+                history_string += calc_history[len(calc_history) -
+                                               calc_history.index(item) - 1] + "\n"
+                self.history_instructions.config(text="Here is your calculation "
+                                                      "history.  You can use the "
+                                                      "export button to save this "
+                                                      "data to a text file if "
+                                                      "desired.")
 
         # Calculations label (row 2)
         self.calc_label = Label(self.history_frame, text=history_string,
