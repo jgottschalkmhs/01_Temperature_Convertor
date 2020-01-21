@@ -10,7 +10,14 @@ class Converter:
         # Formatting variables...
         background_color = "light blue"
 
-        all_calc_list = []
+        # In actual program this is blank and is populated with user calculations
+        self.all_calc_list = ['0 degrees C is -17.8 degrees F',
+                         '0 degrees C is 32 degrees F',
+                         '40 degrees C is 104 degrees F',
+                         '40 degrees C is 4.4 degrees F',
+                         '12 degrees C is 53.6 degrees F',
+                         '24 degrees C is 75.2 degrees F',
+                         '100 degrees C is 37.8 degrees F']
 
         # Converter Main Screen GUI...
         self.converter_frame = Frame(width=300, height=300, bg=background_color,
@@ -29,18 +36,19 @@ class Converter:
         self.history_button = Button(self.converter_frame,
                                      text="Calculation History",
                                      font="Arial 14", padx=10, pady=10,
-                                     command=self.history)
+                                     command=lambda: self.history(self.all_calc_list))
         self.history_button.grid(row=1)
 
-    def history(self):
-        get_history = History(self)
+    def history(self, calc_history):
+        get_history = History(self, calc_history)
         
 
 class History:
-    def __init__(self, partner):
+    def __init__(self, partner, calc_history):
 
         background = "#a9ef99"     # Pale green
 
+        print(calc_history)
 
         # disable help button
         partner.history_button.config(state=DISABLED)
@@ -74,10 +82,34 @@ class History:
                                           padx=10, pady=10)
         self.history_instructions.grid(row=1)
 
-        self.all_calcs_frame = Frame(self.history_frame)
+        # Calculations frame (row 2)
+        self.all_calcs_frame = Frame(self.history_frame, bg=background)
         self.all_calcs_frame.grid(row=2)
 
         # Calculations go here...
+        counter = 0
+        for item in calc_history:
+            self.single_calc_label = Label(self.all_calcs_frame, text=item, bg=background,
+                                           font="Arial 12", justify=LEFT)
+            self.single_calc_label.grid(row=counter)
+            counter += 1
+
+        # Export / Dismiss Buttons Frame (row 3)
+        self.export_dismiss_frame = Frame(self.history_frame)
+        self.export_dismiss_frame.grid(row=3, pady=10)
+
+        # Export Button
+        self.export_button = Button(self.export_dismiss_frame, text="Export",
+                                    font="Arial 12 bold")
+        self.export_button.grid(row=0, column=0)
+
+        # Dismiss Button
+        self.dismiss_button = Button(self.export_dismiss_frame, text="Dismiss",
+                                    font="Arial 12 bold", command=partial(self.close_history, partner))
+        self.dismiss_button.grid(row=0, column=1)
+
+        # Dismiss Button
+
 
     def close_history(self, partner):
         # Put help button back to normal...
