@@ -37,7 +37,7 @@ class Converter:
         self.history_button.grid(row=1)
 
     def history(self, calc_history):
-        get_history = History(self, calc_history)
+        History(self, calc_history)
         
 
 class History:
