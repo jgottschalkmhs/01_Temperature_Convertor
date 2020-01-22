@@ -13,11 +13,10 @@ class Converter:
 
         # In actual program this is blank and is populated with user calculations
 
-        self.all_calc_list = ['0 degrees C is -17.8 degrees F',
-                              '0 degrees C is 32 degrees F',
-                              '24 degrees C is 75.2 degrees F',
-                              '100 degrees C is 37.8 degrees F']
-
+        self.all_calc_list = ['1 degrees C is -17.2 degrees F',
+                              '2 degrees C is -16.7 degrees F',
+                              '3 degrees C is -16.1 degrees F',
+                                ]
 
         # self.all_calc_list = []
 
@@ -183,7 +182,7 @@ class Export:
         self.filename_entry.grid(row=3, pady=10)
 
         # Error Message Labels (initially blank, row 4)
-        self.save_error_label = Label(self.export_frame, text="Error goes here", fg="maroon",
+        self.save_error_label = Label(self.export_frame, text="", fg="maroon",
                                       bg=background)
         self.save_error_label.grid(row=4)
 
@@ -193,21 +192,62 @@ class Export:
 
         # Save and Cancel Buttons (row 0 of save_cancel_frame)
         self.save_button = Button(self.save_cancel_frame, text="Save",
-                                  command=self.save_history)
+                                  command=partial(lambda: self.save_history(partner, calc_history)))
         self.save_button.grid(row=0, column=0)
 
         self.cancel_button = Button(self.save_cancel_frame, text="Cancel",
                                     command=partial(self.close_export, partner))
         self.cancel_button.grid(row=0, column=1)
 
-    def save_history(self):
+    def save_history(self, partner, calc_history):
 
         # Regular expression to check filname is valid
         valid_char = "[A-Za-z0-9_]"
-        has_errors = "no"
+        has_error = "no"
 
         filename = self.filename_entry.get()
         print(filename)
+
+        for letter in filename:
+            if re.match(valid_char, letter):
+                continue
+
+            elif letter == " ":
+                problem = "(no spaces allowed)"
+
+            else:
+                problem = ("(no {}'s allowed)".format(letter))
+            has_error = "yes"
+            break
+
+        if filename == "":
+            problem = "can't be blank"
+            has_error = "yes"
+
+        if has_error == "yes":
+            # Display error message
+            self.save_error_label.config(text="Invalid filename - {}".format(problem))
+            # Change entry box background to pink
+            self.filename_entry.config(bg="#ffafaf")
+            print()
+
+        else:
+            # If there are no errors, generate text file and then close dialogue
+            # add .txt suffix!
+            filename = filename + ".txt"
+
+            # create file to hold data
+            f = open(filename, "w+")
+
+            # add new line at end of each item
+            for item in calc_history:
+                f.write(item + "\n")
+
+            # close file
+            f.close()
+
+            # close dialogue
+            self.close_export(partner)
 
     def close_export(self, partner):
         # Put export button back to normal...
