@@ -1,5 +1,6 @@
 from tkinter import *
 from functools import partial   # To prevent unwanted windows
+import re
 
 import random
 
@@ -113,7 +114,8 @@ class History:
 
         # Export Button
         self.export_button = Button(self.export_dismiss_frame, text="Export",
-                                    font="Arial 12 bold", command=self.export)
+                                    font="Arial 12 bold",
+                                    command=lambda: self.export(calc_history))
         self.export_button.grid(row=0, column=0)
 
         # Dismiss Button
@@ -127,12 +129,14 @@ class History:
         partner.history_button.config(state=NORMAL)
         self.history_box.destroy()
 
-    def export(self):
-        get_export = Export(self)
+    def export(self, calc_history):
+        Export(self, calc_history)
 
 
 class Export:
-    def __init__(self, partner):
+    def __init__(self, partner, calc_history):
+
+        print(calc_history)
 
         background = "#a9ef99"     # Pale green
 
@@ -178,17 +182,32 @@ class Export:
                                     font="Arial 14 bold", justify=CENTER)
         self.filename_entry.grid(row=3, pady=10)
 
-        # Save / Cancel Frame (row 4)
+        # Error Message Labels (initially blank, row 4)
+        self.save_error_label = Label(self.export_frame, text="Error goes here", fg="maroon",
+                                      bg=background)
+        self.save_error_label.grid(row=4)
+
+        # Save / Cancel Frame (row 5)
         self.save_cancel_frame = Frame(self.export_frame)
         self.save_cancel_frame.grid(row=5, pady=10)
 
         # Save and Cancel Buttons (row 0 of save_cancel_frame)
-        self.save_button = Button(self.save_cancel_frame, text="Save")
+        self.save_button = Button(self.save_cancel_frame, text="Save",
+                                  command=self.save_history)
         self.save_button.grid(row=0, column=0)
 
         self.cancel_button = Button(self.save_cancel_frame, text="Cancel",
                                     command=partial(self.close_export, partner))
         self.cancel_button.grid(row=0, column=1)
+
+    def save_history(self):
+
+        # Regular expression to check filname is valid
+        valid_char = "[A-Za-z0-9_]"
+        has_errors = "no"
+
+        filename = self.filename_entry.get()
+        print(filename)
 
     def close_export(self, partner):
         # Put export button back to normal...
