@@ -12,13 +12,13 @@ class Converter:
 
         # In actual program this is blank and is populated with user calculations
 
-        ''' self.all_calc_list = ['0 degrees C is -17.8 degrees F',
+        self.all_calc_list = ['0 degrees C is -17.8 degrees F',
                               '0 degrees C is 32 degrees F',
                               '24 degrees C is 75.2 degrees F',
                               '100 degrees C is 37.8 degrees F']
-                              '''
 
-        self.all_calc_list = []
+
+        # self.all_calc_list = []
 
         # Converter Main Screen GUI...
         self.converter_frame = Frame(width=300, height=300, bg=background_color,
