@@ -12,12 +12,12 @@ class Converter:
 
         # In actual program this is blank and is populated with user calculations
         self.all_calc_list = ['0 degrees C is -17.8 degrees F',
-                         '0 degrees C is 32 degrees F',
-                         '40 degrees C is 104 degrees F',
-                         '40 degrees C is 4.4 degrees F',
-                         '12 degrees C is 53.6 degrees F',
-                         '24 degrees C is 75.2 degrees F',
-                         '100 degrees C is 37.8 degrees F']
+                              '0 degrees C is 32 degrees F',
+                              '40 degrees C is 104 degrees F',
+                              '40 degrees C is 4.4 degrees F',
+                              '12 degrees C is 53.6 degrees F',
+                              '24 degrees C is 75.2 degrees F',
+                              '100 degrees C is 37.8 degrees F']
 
         # Converter Main Screen GUI...
         self.converter_frame = Frame(width=300, height=300, bg=background_color,
@@ -33,8 +33,8 @@ class Converter:
 
         # history Button (row 1)
         self.history_button = Button(self.converter_frame, text="History",
-                                  font=("Arial", "14"),
-                                  padx=10, pady=10, command=self.history)
+                                     font=("Arial", "14"),
+                                     padx=10, pady=10, command=self.history)
         self.history_button.grid(row=1)
 
     def history(self):
@@ -56,7 +56,6 @@ class history:
         # If users press cross at top, closes history and 'releases' history button
         self.history_box.protocol('WM_DELETE_WINDOW', partial(self.close_history, partner))
 
-
         # Set up GUI Frame
         self.history_frame = Frame(self.history_box, width=300, bg=background)
         self.history_frame.grid()
@@ -68,18 +67,18 @@ class history:
 
         # history text (label, row 1)
         self.history_text = Label(self.history_frame,
-                                          text="Here are your most recent "
-                                               "calculations.  Please use the "
-                                               "export button to create a text "
-                                               "file of all your calculations for "
-                                               "this session", wrap=250,
-                                          font="arial 10 italic",
-                                          justify=LEFT, bg=background, fg="maroon",
-                                          padx=10, pady=10)
+                                  text="Here are your most recent "
+                                       "calculations.  Please use the "
+                                       "export button to create a text "
+                                       "file of all your calculations for "
+                                       "this session", wrap=250,
+                                  font="arial 10 italic",
+                                  justify=LEFT, bg=background, fg="maroon",
+                                  padx=10, pady=10)
         self.history_text.grid(row=1)
 
         # History Output goes here.. (row 2)
-        
+
         # Generate string from list of calculations...
 
         # Label to display calculation history to user
@@ -95,9 +94,9 @@ class history:
 
         # Dismiss Button
         self.dismiss_button = Button(self.export_dismiss_frame, text="Dismiss",
-                                    font="Arial 12 bold", command=partial(self.close_history, partner))
+                                     font="Arial 12 bold",
+                                     command=partial(self.close_history, partner))
         self.dismiss_button.grid(row=0, column=1)
-
 
     def close_history(self, partner):
         # Put history button back to normal...
